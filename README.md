@@ -30,6 +30,28 @@ npm run dev                  # http://localhost:3000 → redirects to /fa or /en
 - **SEO.** Per-locale metadata with `hreflang` alternates, Open Graph, `sitemap.xml` and `robots.txt`.
 - **Fonts** are self-hosted with `@fontsource-variable` (Vazirmatn, Nunito, Fredoka, Geist Mono).
 
+### Modern platform features used
+
+**Next.js 16**
+- `proxy.ts` — the new name for middleware
+- Cache Components (`cacheComponents: true`) with Partial Prerendering
+- `"use cache"` + `cacheLife()` for the GitHub data
+- `next/root-params` to read the locale anywhere on the server without prop drilling
+- Typed route helpers (`LayoutProps<"/[lang]">`) and `next typegen`
+- Turbopack (default bundler for dev and build)
+- Metadata API with `hreflang` alternates, file-based `sitemap.ts`, `robots.ts`, `icon.svg`
+
+**Tailwind CSS v4**
+- CSS-first config: `@theme inline`, `@custom-variant`, `@utility` — no `tailwind.config.js`
+- Logical utilities for RTL (`ps-*`, `pe-*`, `start-*`, `end-*`) and the `rtl:` variant
+
+**Modern CSS**
+- Scroll-driven animations: `animation-timeline: view()` + `animation-range`, behind `@supports`
+- Individual transform properties (`translate`, `rotate`, `scale`) so entrance, hover and float animations compose
+- Logical properties (`padding-inline-start`, `inset-inline-end`) instead of left/right
+- `dvh` viewport units, `aspect-ratio`, `clamp()` for fluid type
+- `color-scheme`, `:focus-visible`, `prefers-reduced-motion`, `prefers-color-scheme`
+
 ```
 app/
   [lang]/
