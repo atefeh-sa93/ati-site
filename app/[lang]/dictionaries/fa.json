@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "title": "عاطفه آتشی — مهندس ارشد فرانت‌اند",
+    "description": "مهندس ارشد فرانت‌اند با بیش از ۷ سال تجربه در React، Next.js و TypeScript؛ دیزاین سیستم، محصولات فین‌تک و بهینه‌سازی Core Web Vitals."
+  },
+  "nav": {
+    "label": "منوی اصلی",
+    "work": "نمونه‌کارها",
+    "writing": "نوشته‌ها",
+    "contact": "تماس",
+    "toLight": "تغییر به حالت روشن",
+    "toDark": "تغییر به حالت تاریک",
+    "language": "زبان"
+  },
+  "person": {
+    "name": "عاطفه آتشی",
+    "initial": "ع",
+    "role": "مهندس ارشد فرانت‌اند"
+  },
+  "hero": {
+    "badge": "آمادهٔ همکاری · ریموت یا مهاجرت",
+    "title": "محصولات وب سریع و دسترس‌پذیر می‌سازم، با React و Next.js.",
+    "intro": "مهندس ارشد فرانت‌اند با بیش از ۷ سال تجربه در ساخت اپلیکیشن‌های واقعی؛ از دیزاین سیستم و محصولات فین‌تک و پرداخت تا SSR، کش و بهینه‌سازی Core Web Vitals.",
+    "ctaWork": "نمونه‌کارها",
+    "ctaCv": "دانلود رزومه"
+  },
+  "impact": {
+    "label": "/impact",
+    "items": [
+      { "value": 7, "prefix": "+", "suffix": " سال", "label": "تجربهٔ حرفه‌ای" },
+      { "value": 40, "prefix": "+", "suffix": "", "label": "کامپوننت در دیزاین سیستم" },
+      { "value": 35, "prefix": "", "suffix": "٪", "label": "بهبود Core Web Vitals" },
+      { "value": 1, "prefix": "+", "suffix": "M", "label": "کاربر در محصول پرداخت" }
+    ]
+  },
+  "now": {
+    "label": "/now",
+    "text": "فرانت‌اند فریلنس؛ الان روی یک فروشگاه آنلاین لوکس برای بازار ایتالیا با Next.js 16 کار می‌کنم.",
+    "since": "از اسفند ۱۴۰۴ تا امروز"
+  },
+  "work": {
+    "label": "/work",
+    "title": "نمونه‌کارهای منتخب",
+    "note": "پروژه‌های شرکتی؛ نقش و نتیجهٔ کار من",
+    "projects": [
+      {
+        "id": "quarkino",
+        "tone": "coral",
+        "visual": "grid",
+        "badge": "design-system / 40+ components",
+        "meta": "Quarkino · بارسلون (ریموت) · ۲۰۲۳ تا ۲۰۲۶",
+        "title": "دیزاین سیستم یک پلتفرم Low-code",
+        "body": "کتابخانهٔ ۴۰+ کامپوننتی با Shadcn UI و Tailwind که زمان توسعه را ۶۰٪ کم کرد؛ همراه با مهاجرت به TypeScript و بهبود ۳۵٪ی LCP و CLS.",
+        "tags": ["next.js", "shadcn/ui", "tanstack-query"]
+      },
+      {
+        "id": "storefront",
+        "tone": "teal",
+        "visual": "bag",
+        "badge": "storefront / launching 2026",
+        "meta": "فریلنس · بازار ایتالیا · ۲۰۲۶",
+        "title": "فروشگاه آنلاین لوکس",
+        "body": "Next.js 16 با RSC، ورود با OTP و گوگل، سبد خرید ماندگار، و سئوی فنی کامل با JSON-LD، متادیتا و sitemap.",
+        "tags": ["next@16", "rsc", "seo"]
+      },
+      {
+        "id": "itoll",
+        "tone": "sun",
+        "visual": "steps",
+        "badge": "checkout-flow / 1M+ users",
+        "meta": "iToll · ۲۰۲۲ تا ۲۰۲۳",
+        "title": "بازطراحی خرید بیمهٔ دیجیتال",
+        "body": "بازطراحی کامل مسیر خرید با تیم‌های بک‌اند، طراحی و تحلیل داده که ریزش کاربر را ۶۰٪ کم کرد.",
+        "tags": ["vue", "nuxt", "ux"]
+      }
+    ]
+  },
+  "activity": {
+    "title": "اوپن‌سورس در گیت‌هاب",
+    "chartLabel": "نمودار فعالیت گیت‌هاب در ۴ هفتهٔ اخیر",
+    "building": "در حال ساخت: همین سایت دوزبانه، و یک کتابخانهٔ سبک برای فرمت تاریخ شمسی و اعداد فارسی."
+  },
+  "stack": {
+    "title": "ابزارهای اصلی",
+    "label": "/stack"
+  },
+  "writing": {
+    "label": "/writing",
+    "title": "نوشته‌ها",
+    "medium": "نوشته‌های من در Medium",
+    "soon": "به‌زودی",
+    "posts": [
+      { "title": "ساختن یک دیزاین سیستم ۴۰ کامپوننتی با Shadcn UI و Tailwind", "langs": ["fa", "en"], "dot": "coral" },
+      { "title": "چطور Core Web Vitals را ۳۵٪ بهتر کردیم", "langs": ["fa", "en"], "dot": "sun" },
+      { "title": "سئوی فنی در Next.js 16: متادیتا، JSON-LD و sitemap", "langs": ["fa"], "dot": "teal" }
+    ]
+  },
+  "contact": {
+    "cmd": "contact --open-to-work",
+    "title": "بیایید با هم کار کنیم.",
+    "body": "آمادهٔ همکاری در نقش‌های ارشد فرانت‌اند هستم؛ به‌صورت ریموت یا با مهاجرت، و همین‌طور پروژه‌های فریلنس.",
+    "linkedin": "لینکدین",
+    "github": "گیت‌هاب",
+    "medium": "Medium",
+    "cv": "رزومه (PDF)",
+    "floating": ["React", "Next.js", "TypeScript"]
+  },
+  "footer": {
+    "copyright": "© ۱۴۰۵ عاطفه آتشی",
+    "built": "built with next.js · fa/en"
+  },
+  "notFound": {
+    "title": "این صفحه پیدا نشد",
+    "body": "شاید آدرس اشتباه است، یا این صفحه هنوز ساخته نشده.",
+    "back": "بازگشت به خانه"
+  }
+}

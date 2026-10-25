@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ati Atashi — personal site
 
-## Getting Started
+Bilingual (Persian / English) portfolio built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**.
+Light and dark themes, RTL-first layout, and motion that respects `prefers-reduced-motion`.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # optional
+npm run dev                  # http://localhost:3000 → redirects to /fa or /en
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Dev server (Turbopack) |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | Generates route types, then `tsc --noEmit` |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **i18n without a library.** Every route lives under `app/[lang]`. `proxy.ts` (Next 16's replacement for middleware) redirects `/` to `/fa` or `/en` from a saved `lang` cookie or the browser's `Accept-Language`. Strings live in `app/[lang]/dictionaries/*.json` and are read on the server via `next/root-params`, so translations never reach the client bundle.
+- **Static by default.** Cache Components is on; both locales are prerendered with `generateStaticParams`.
+- **No theme flash.** An inline script in the root layout sets `data-theme` on `<html>` before first paint (saved cookie, else OS preference). The toggle just flips the attribute; icons switch with CSS, so there's no hydration mismatch.
+- **Design tokens.** Colours are CSS variables in `app/globals.css`, switched by `[data-theme="dark"]` and exposed to Tailwind via `@theme` (`bg-surface`, `text-sub`, `bg-coral-soft`…). A custom `dark:` variant follows `data-theme`.
+- **RTL-first.** Logical utilities (`ps-*`, `end-*`, `start-*`) everywhere; arrows flip with `rtl:`; code and tags are forced `dir="ltr"`.
+- **GitHub card.** `lib/github.ts` fetches the last 28 days of contributions through the GraphQL API inside a `"use cache"` function (`cacheLife("hours")`). Without `GITHUB_TOKEN` it shows sample data.
+- **Motion.** Entrance animations, a scroll-driven reveal (`animation-timeline: view()`, progressive enhancement), count-up stats (`components/count-up.tsx`) and hover details — all disabled under reduced motion.
+- **SEO.** Per-locale metadata with `hreflang` alternates, Open Graph, `sitemap.xml` and `robots.txt`.
+- **Fonts** are self-hosted with `@fontsource-variable` (Vazirmatn, Nunito, Fredoka, Geist Mono).
 
-## Learn More
+```
+app/
+  [lang]/
+    layout.tsx        root layout: <html lang dir>, theme script, metadata
+    page.tsx          home page
+    not-found.tsx
+    dictionaries.ts   getLocale() / getDictionary()
+    dictionaries/     fa.json, en.json
+  globals.css         tokens, Tailwind theme, animations
+  sitemap.ts, robots.ts, icon.svg
+components/           header, hero, work, activity, writing, contact, client widgets
+lib/                  i18n config, site settings, GitHub data, cookie helper
+proxy.ts              locale redirect
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Before launch
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [ ] Set `NEXT_PUBLIC_SITE_URL` (and `GITHUB_TOKEN`) in Vercel
+- [ ] Add your CV as `public/cv.pdf`
+- [ ] Add your Medium URL in `lib/site.ts`
+- [ ] Replace the "soon" posts once the first article is written
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push to GitHub and import the repo in [Vercel](https://vercel.com/new). No extra configuration needed.

@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "title": "Ati Atashi — Senior Front-End Engineer",
+    "description": "Senior Front-End Engineer with 7+ years of React, Next.js and TypeScript: design systems, fintech products and Core Web Vitals performance."
+  },
+  "nav": {
+    "label": "Main",
+    "work": "Work",
+    "writing": "Writing",
+    "contact": "Contact",
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode",
+    "language": "Language"
+  },
+  "person": {
+    "name": "Ati Atashi",
+    "initial": "A",
+    "role": "Senior Front-End Engineer"
+  },
+  "hero": {
+    "badge": "Open to new roles · remote or relocation",
+    "title": "I build fast, accessible web products with React and Next.js.",
+    "intro": "Senior Front-End Engineer with 7+ years shipping production apps, from design systems and fintech payment flows to SSR, caching and Core Web Vitals.",
+    "ctaWork": "View work",
+    "ctaCv": "Download CV"
+  },
+  "impact": {
+    "label": "/impact",
+    "items": [
+      { "value": 7, "prefix": "", "suffix": "+ yrs", "label": "in production" },
+      { "value": 40, "prefix": "", "suffix": "+", "label": "design system components" },
+      { "value": 35, "prefix": "", "suffix": "%", "label": "better Core Web Vitals" },
+      { "value": 1, "prefix": "", "suffix": "M+", "label": "users on a payment product" }
+    ]
+  },
+  "now": {
+    "label": "/now",
+    "text": "Freelancing: building a luxury e-commerce storefront for the Italian market with Next.js 16.",
+    "since": "Mar 2026 – present"
+  },
+  "work": {
+    "label": "/work",
+    "title": "Selected work",
+    "note": "Company projects: my role and the results",
+    "projects": [
+      {
+        "id": "quarkino",
+        "tone": "coral",
+        "visual": "grid",
+        "badge": "design-system / 40+ components",
+        "meta": "Quarkino · Barcelona (remote) · 2023–2026",
+        "title": "Design system for a low-code platform",
+        "body": "A 40+ component library on Shadcn UI and Tailwind that cut development time by 60%, plus a TypeScript-first migration and 35% better LCP and CLS.",
+        "tags": ["next.js", "shadcn/ui", "tanstack-query"]
+      },
+      {
+        "id": "storefront",
+        "tone": "teal",
+        "visual": "bag",
+        "badge": "storefront / launching 2026",
+        "meta": "Freelance · Italian market · 2026",
+        "title": "Luxury e-commerce storefront",
+        "body": "Next.js 16 with RSC, OTP and Google sign-in, a persisted cart, and full technical SEO with JSON-LD, metadata and sitemaps.",
+        "tags": ["next@16", "rsc", "seo"]
+      },
+      {
+        "id": "itoll",
+        "tone": "sun",
+        "visual": "steps",
+        "badge": "checkout-flow / 1M+ users",
+        "meta": "iToll · 2022–2023",
+        "title": "Digital insurance checkout redesign",
+        "body": "An end-to-end redesign of the purchase flow with backend, design and analytics teams that cut user drop-off by 60%.",
+        "tags": ["vue", "nuxt", "ux"]
+      }
+    ]
+  },
+  "activity": {
+    "title": "Open source on GitHub",
+    "chartLabel": "GitHub activity over the last 4 weeks",
+    "building": "In progress: this bilingual site, and a lightweight library for Jalali dates and Persian number formatting."
+  },
+  "stack": {
+    "title": "Core stack",
+    "label": "/stack"
+  },
+  "writing": {
+    "label": "/writing",
+    "title": "Writing",
+    "medium": "Also on Medium",
+    "soon": "Soon",
+    "posts": [
+      { "title": "Building a 40-component design system with Shadcn UI and Tailwind", "langs": ["en", "fa"], "dot": "coral" },
+      { "title": "How we improved Core Web Vitals by 35%", "langs": ["en", "fa"], "dot": "sun" },
+      { "title": "Technical SEO in Next.js 16: metadata, JSON-LD and sitemaps", "langs": ["en"], "dot": "teal" }
+    ]
+  },
+  "contact": {
+    "cmd": "contact --open-to-work",
+    "title": "Let's work together.",
+    "body": "Open to senior front-end roles, remote or with relocation, and to selected freelance projects.",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "medium": "Medium",
+    "cv": "CV (PDF)",
+    "floating": ["React", "Next.js", "TypeScript"]
+  },
+  "footer": {
+    "copyright": "© 2026 Ati Atashi",
+    "built": "built with next.js · en/fa"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The address may be wrong, or this page doesn't exist yet.",
+    "back": "Back home"
+  }
+}
