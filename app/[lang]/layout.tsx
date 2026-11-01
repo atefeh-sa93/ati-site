@@ -6,6 +6,7 @@ import "@fontsource-variable/geist-mono";
 import "../globals.css";
 import { defaultLocale, dirOf, locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { themeScript } from "@/lib/theme";
 import { getDictionary, getLocale } from "./dictionaries";
 
 export async function generateStaticParams() {
@@ -37,9 +38,6 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: { card: "summary_large_image", title: t.meta.title, description: t.meta.description, images: [image] },
   };
 }
-
-// Runs before first paint: applies the saved theme (or the OS preference) so there's no flash.
-const themeScript = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=(light|dark)/);var t=m?m[1]:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}})()`;
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
   const locale = await getLocale();

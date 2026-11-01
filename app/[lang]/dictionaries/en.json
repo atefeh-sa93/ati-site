@@ -110,8 +110,11 @@
     "built": "built with next.js · en/fa"
   },
   "notFound": {
-    "title": "Page not found",
-    "body": "The address may be wrong, or this page doesn't exist yet.",
-    "back": "Back home"
+    "title": "This page took a wrong turn",
+    "body": "The link may be old, or the page has moved. Let's get you back on track.",
+    "back": "Back home",
+    "contact": "Get in touch",
+    "error": "error: page not found",
+    "digit": "4"
   }
 }

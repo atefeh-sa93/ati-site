@@ -47,6 +47,7 @@ npm run dev                  # http://localhost:3000/en/ or /fa/
 - **GitHub card.** `lib/github.ts` fetches the last 28 days of contributions through the GraphQL API at build time; the deploy workflow rebuilds daily to keep it fresh. Without `GITHUB_TOKEN` it shows sample data (and logs a warning in the build).
 - **Motion.** Entrance animations, a scroll-driven reveal (`animation-timeline: view()`, progressive enhancement), count-up stats (`components/count-up.tsx`) and hover details — all disabled under reduced motion.
 - **SEO.** Per-locale metadata with canonical URLs, `hreflang` alternates and Open Graph.
+- **404 page.** `app/global-not-found.tsx` (experimental `globalNotFound`) is exported as `404.html`, which GitHub Pages serves for every unknown URL. It renders both languages and an inline script shows Persian for `/fa/…` URLs or a saved choice; the terminal line shows the address that was requested.
 - **Social preview.** `app/[lang]/og.png/route.tsx` renders a 1200×630 card per locale at build time with `next/og`. Satori has no RTL support, so Persian is laid out word by word (row-reverse, ZWNJ words kept whole) with widths measured by `fontkit`.
 - **Fonts** are self-hosted with `@fontsource-variable` (Vazirmatn, Nunito, Fredoka, Geist Mono).
 
@@ -75,10 +76,11 @@ app/
   [lang]/
     layout.tsx        root layout: <html lang dir>, theme script, metadata
     page.tsx          home page
-    not-found.tsx
+    not-found.tsx     in-app 404 (same view as the global one)
     dictionaries.ts   getLocale() / getDictionary()
     dictionaries/     fa.json, en.json
     og.png/route.tsx  social preview image
+  global-not-found.tsx  404.html for GitHub Pages
   globals.css         tokens, Tailwind theme, animations
   icon.svg
 components/           header, hero, work, activity, writing, contact, client widgets
