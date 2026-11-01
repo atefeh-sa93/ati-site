@@ -1,8 +1,14 @@
 # Ati Atashi — personal site
 
-Bilingual (Persian / English) portfolio built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**, exported as a static site to **GitHub Pages**.
+[![Deploy](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml/badge.svg)](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml)
 
-**Live:** https://atefeh-sa93.github.io/ati-site/
+### 🌐 [atefeh-sa93.github.io/ati-site](https://atefeh-sa93.github.io/ati-site/)
+
+[English](https://atefeh-sa93.github.io/ati-site/en/) · [فارسی](https://atefeh-sa93.github.io/ati-site/fa/) · [CV (PDF)](https://atefeh-sa93.github.io/ati-site/cv.pdf) · [LinkedIn](https://www.linkedin.com/in/atefeh-atashi/)
+
+[![Ati Atashi — Senior Front-End Engineer](https://atefeh-sa93.github.io/ati-site/en/og.png)](https://atefeh-sa93.github.io/ati-site/)
+
+Bilingual (Persian / English) portfolio built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**, exported as a static site to **GitHub Pages**.
 Light and dark themes, RTL-first layout, and motion that respects `prefers-reduced-motion`.
 
 ## Getting started
@@ -30,6 +36,7 @@ npm run dev                  # http://localhost:3000/en/ or /fa/
 - **GitHub card.** `lib/github.ts` fetches the last 28 days of contributions through the GraphQL API at build time; the deploy workflow rebuilds daily to keep it fresh. Without `GITHUB_TOKEN` it shows sample data (and logs a warning in the build).
 - **Motion.** Entrance animations, a scroll-driven reveal (`animation-timeline: view()`, progressive enhancement), count-up stats (`components/count-up.tsx`) and hover details — all disabled under reduced motion.
 - **SEO.** Per-locale metadata with canonical URLs, `hreflang` alternates and Open Graph.
+- **Social preview.** `app/[lang]/og.png/route.tsx` renders a 1200×630 card per locale at build time with `next/og`. Satori has no RTL support, so Persian is laid out word by word (row-reverse, ZWNJ words kept whole) with widths measured by `fontkit`.
 - **Fonts** are self-hosted with `@fontsource-variable` (Vazirmatn, Nunito, Fredoka, Geist Mono).
 
 ### Modern platform features used
@@ -60,6 +67,7 @@ app/
     not-found.tsx
     dictionaries.ts   getLocale() / getDictionary()
     dictionaries/     fa.json, en.json
+    og.png/route.tsx  social preview image
   globals.css         tokens, Tailwind theme, animations
   icon.svg
 components/           header, hero, work, activity, writing, contact, client widgets

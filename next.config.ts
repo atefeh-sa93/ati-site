@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
   basePath,
   // Emit /fa/index.html instead of /fa.html so static hosts serve /fa/ directly.
   trailingSlash: true,
+  // Used at build time by app/[lang]/og.png; bundling breaks it, so Node loads it directly.
+  serverExternalPackages: ["fontkit"],
   turbopack: {
     rules: {
       "*.css": {
