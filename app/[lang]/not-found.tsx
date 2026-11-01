@@ -11,7 +11,7 @@ export default async function NotFound() {
       <p dir="ltr" className="m-0 font-mono text-sm text-accent-text">404</p>
       <h1 className="m-0 font-heading text-4xl font-extrabold">{t.notFound.title}</h1>
       <p className="m-0 text-sub">{t.notFound.body}</p>
-      <Link href={`/${locale}`} className="lift inline-flex min-h-[52px] items-center rounded-full bg-primary px-7 font-bold text-white no-underline">
+      <Link href={`/${locale}`} className="lift inline-flex min-h-13 items-center rounded-full bg-primary px-7 font-bold text-white no-underline">
         {t.notFound.back}
       </Link>
     </main>

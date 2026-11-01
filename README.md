@@ -24,7 +24,7 @@ npm run dev                  # http://localhost:3000 → redirects to /fa or /en
 - **Static by default.** Cache Components is on; both locales are prerendered with `generateStaticParams`.
 - **No theme flash.** An inline script in the root layout sets `data-theme` on `<html>` before first paint (saved cookie, else OS preference). The toggle just flips the attribute; icons switch with CSS, so there's no hydration mismatch.
 - **Design tokens.** Colours are CSS variables in `app/globals.css`, switched by `[data-theme="dark"]` and exposed to Tailwind via `@theme` (`bg-surface`, `text-sub`, `bg-coral-soft`…). A custom `dark:` variant follows `data-theme`.
-- **RTL-first.** Logical utilities (`ps-*`, `end-*`, `start-*`) everywhere; arrows flip with `rtl:`; code and tags are forced `dir="ltr"`.
+- **RTL-first.** Logical utilities (`ps-*`, `inset-e-*`, `inset-s-*`) everywhere; arrows flip with `rtl:`; code and tags are forced `dir="ltr"`.
 - **GitHub card.** `lib/github.ts` fetches the last 28 days of contributions through the GraphQL API inside a `"use cache"` function (`cacheLife("hours")`). Without `GITHUB_TOKEN` it shows sample data.
 - **Motion.** Entrance animations, a scroll-driven reveal (`animation-timeline: view()`, progressive enhancement), count-up stats (`components/count-up.tsx`) and hover details — all disabled under reduced motion.
 - **SEO.** Per-locale metadata with `hreflang` alternates, Open Graph, `sitemap.xml` and `robots.txt`.
@@ -43,7 +43,7 @@ npm run dev                  # http://localhost:3000 → redirects to /fa or /en
 
 **Tailwind CSS v4**
 - CSS-first config: `@theme inline`, `@custom-variant`, `@utility` — no `tailwind.config.js`
-- Logical utilities for RTL (`ps-*`, `pe-*`, `start-*`, `end-*`) and the `rtl:` variant
+- Logical utilities for RTL (`ps-*`, `pe-*`, `inset-s-*`, `inset-e-*`) and the `rtl:` variant
 
 **Modern CSS**
 - Scroll-driven animations: `animation-timeline: view()` + `animation-range`, behind `@supports`
@@ -67,13 +67,11 @@ lib/                  i18n config, site settings, GitHub data, cookie helper
 proxy.ts              locale redirect
 ```
 
-## Before launch
-
-- [ ] Set `NEXT_PUBLIC_SITE_URL` (and `GITHUB_TOKEN`) in Vercel
-- [ ] Add your CV as `public/cv.pdf`
-- [ ] Add your Medium URL in `lib/site.ts`
-- [ ] Replace the "soon" posts once the first article is written
-
 ## Deploy
 
-Push to GitHub and import the repo in [Vercel](https://vercel.com/new). No extra configuration needed.
+Push to GitHub and import the repo in [Vercel](https://vercel.com/new). Optional environment variables (see `.env.example`):
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Public URL used for canonical links, sitemap and Open Graph. Defaults to `https://ati-atashi.vercel.app`. |
+| `GITHUB_TOKEN` | A token with no scopes; shows the real contribution graph instead of sample data. |

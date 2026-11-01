@@ -10,7 +10,7 @@ const TONES: Record<string, { card: string; visual: string }> = {
 };
 
 function Visual({ kind }: { kind: string }) {
-  const common = "wiggle absolute -top-6 -end-6";
+  const common = "wiggle absolute -top-6 -inset-e-6";
   if (kind === "grid")
     return (
       <svg aria-hidden="true" width="150" height="150" viewBox="0 0 150 150" className={`${common} opacity-45`}>
@@ -41,7 +41,7 @@ function Visual({ kind }: { kind: string }) {
 function ProjectCard({ project }: { project: Project }) {
   const tone = TONES[project.tone] ?? TONES.coral;
   return (
-    <article className={`lift reveal flex min-w-0 flex-[1_1_300px] flex-col gap-3 rounded-[32px] p-5 pb-7 ${tone.card}`}>
+    <article className={`lift reveal flex min-w-0 flex-[1_1_300px] flex-col gap-3 rounded-4xl p-5 pb-7 ${tone.card}`}>
       <div className={`relative flex aspect-video flex-col justify-end overflow-hidden rounded-[22px] p-5 text-plum ${tone.visual}`}>
         <Visual kind={project.visual} />
         <span dir="ltr" className="relative self-start rounded-full bg-white px-2.5 py-0.5 font-mono text-[13px]">

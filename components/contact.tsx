@@ -2,9 +2,9 @@ import type { Dictionary } from "@/app/[lang]/dictionaries";
 import { site } from "@/lib/site";
 
 const FLOATING = [
-  { cls: "top-7 end-[8%] bg-coral", rot: "-8deg", delay: "0s" },
-  { cls: "bottom-8 start-[8%] bg-teal", rot: "6deg", delay: "-1.5s" },
-  { cls: "top-9 start-[14%] bg-sun", rot: "10deg", delay: "-3s" },
+  { cls: "top-7 inset-e-[8%] bg-coral", rot: "-8deg", delay: "0s" },
+  { cls: "bottom-8 inset-s-[8%] bg-teal", rot: "6deg", delay: "-1.5s" },
+  { cls: "top-9 inset-s-[14%] bg-sun", rot: "10deg", delay: "-3s" },
 ];
 
 export function Contact({ t }: { t: Dictionary }) {
@@ -36,7 +36,7 @@ export function Contact({ t }: { t: Dictionary }) {
       <a
         href={`mailto:${site.email}`}
         dir="ltr"
-        className="lift relative inline-flex min-h-14 items-center rounded-full bg-sun px-[30px] font-display text-lg font-semibold text-plum no-underline"
+        className="lift relative inline-flex min-h-14 items-center rounded-full bg-sun px-7.5 font-display text-lg font-semibold text-plum no-underline"
       >
         {site.email}
       </a>

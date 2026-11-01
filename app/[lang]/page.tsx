@@ -10,7 +10,7 @@ export default async function Home() {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
 
   return (
-    <div className="mx-auto flex max-w-[1160px] flex-col gap-5 px-5 pt-6 pb-12">
+    <div className="mx-auto flex max-w-290 flex-col gap-5 px-5 pt-6 pb-12">
       <Header t={t} locale={locale} />
       <main className="flex flex-col gap-5">
         <Hero t={t} locale={locale} />

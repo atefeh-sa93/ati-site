@@ -2,7 +2,7 @@ import type { Dictionary } from "@/app/[lang]/dictionaries";
 import { getContributionLevels } from "@/lib/github";
 import { site } from "@/lib/site";
 
-const LEVEL_BG = ["bg-[var(--lv-0)]", "bg-[var(--lv-1)]", "bg-[var(--lv-2)]", "bg-[var(--lv-3)]", "bg-[var(--lv-4)]"];
+const LEVEL_BG = ["bg-(--lv-0)", "bg-(--lv-1)", "bg-(--lv-2)", "bg-(--lv-3)", "bg-(--lv-4)"];
 const CHIP_BG = ["bg-coral-soft", "bg-teal-soft", "bg-sun-soft", "bg-violet-soft dark:bg-pill"];
 
 /** Async Server Component: the contribution data is fetched (and cached) on the server. */
@@ -17,11 +17,11 @@ async function GitHubCard({ t }: { t: Dictionary }) {
           @{site.github.user}
         </a>
       </div>
-      <div role="img" aria-label={t.activity.chartLabel} dir="ltr" className="grid grid-cols-14 gap-[5px]">
+      <div role="img" aria-label={t.activity.chartLabel} dir="ltr" className="grid grid-cols-14 gap-1.25">
         {levels.map((level, i) => (
           <span
             key={i}
-            className={`anim-pop aspect-square rounded-[4px] ${LEVEL_BG[level]}`}
+            className={`anim-pop aspect-square rounded-sm ${LEVEL_BG[level]}`}
             style={{ "--delay": `${0.3 + i * 0.03}s` } as React.CSSProperties}
           />
         ))}
