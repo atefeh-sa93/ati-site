@@ -18,7 +18,7 @@ export function Writing({ t }: { t: Dictionary }) {
       <ul className="m-0 flex list-none flex-col gap-3 p-0">
         {t.writing.posts.map((post) => (
           // Posts aren't written yet, so these are plain rows marked "soon" rather than links.
-          <li key={post.title} className="reveal flex flex-wrap items-center gap-x-5 gap-y-2 rounded-3xl border border-line bg-surface px-6 py-[18px] shadow-soft">
+          <li key={post.title} className="reveal flex flex-wrap items-center gap-x-5 gap-y-2 rounded-3xl border border-line bg-surface px-6 py-4.5 shadow-soft">
             <span aria-hidden="true" className={`size-3.5 rounded-full ${DOT[post.dot]}`} />
             <span className="min-w-0 flex-[1_1_260px] text-lg font-bold">{post.title}</span>
             <span className="rounded-full border border-dashed border-muted px-2.5 text-[13px] text-muted">{t.writing.soon}</span>
