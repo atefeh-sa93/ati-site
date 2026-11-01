@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,22 +9,18 @@
     <link rel="alternate" hreflang="en" href="en/" />
     <!--
       Static hosting has no server-side proxy, so this page picks the language:
-      a saved choice first (lang cookie), then the browser's preference, else Persian.
+      the visitor's saved choice (lang cookie, set by the language switch), else English.
       Paths are relative so it works both locally (/) and on GitHub Pages (/ati-site/).
     -->
     <script>
       (function () {
-        var locales = ["fa", "en"];
         var saved = (document.cookie.match(/(?:^|; )lang=(fa|en)/) || [])[1];
-        var preferred = (navigator.languages || [navigator.language || ""])
-          .map(function (tag) { return tag.toLowerCase().split("-")[0]; })
-          .filter(function (lang) { return locales.indexOf(lang) !== -1; })[0];
-        location.replace((saved || preferred || "fa") + "/" + location.hash);
+        location.replace((saved || "en") + "/" + location.hash);
       })();
     </script>
-    <noscript><meta http-equiv="refresh" content="0; url=fa/" /></noscript>
+    <noscript><meta http-equiv="refresh" content="0; url=en/" /></noscript>
   </head>
   <body style="background: #fbf7ff">
-    <noscript><a href="fa/">فارسی</a> · <a href="en/">English</a></noscript>
+    <noscript><a href="en/">English</a> · <a href="fa/">فارسی</a></noscript>
   </body>
 </html>

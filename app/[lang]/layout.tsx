@@ -4,7 +4,7 @@ import "@fontsource-variable/nunito";
 import "@fontsource-variable/fredoka";
 import "@fontsource-variable/geist-mono";
 import "../globals.css";
-import { dirOf, locales } from "@/lib/i18n";
+import { defaultLocale, dirOf, locales } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { getDictionary, getLocale } from "./dictionaries";
 
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t.meta.description,
     alternates: {
       canonical: `/${locale}`,
-      languages: { fa: "/fa", en: "/en", "x-default": "/fa" },
+      languages: { fa: "/fa", en: "/en", "x-default": `/${defaultLocale}` },
     },
     openGraph: {
       type: "website",

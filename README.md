@@ -10,7 +10,7 @@ Light and dark themes, RTL-first layout, and motion that respects `prefers-reduc
 ```bash
 npm install
 cp .env.example .env.local   # optional
-npm run dev                  # http://localhost:3000/fa/ or /en/
+npm run dev                  # http://localhost:3000/en/ or /fa/
 ```
 
 | Script | What it does |
@@ -22,7 +22,7 @@ npm run dev                  # http://localhost:3000/fa/ or /en/
 
 ## How it works
 
-- **i18n without a library.** Every route lives under `app/[lang]`. Static hosting has no server, so `public/index.html` redirects `/` to `fa/` or `en/` from a saved `lang` cookie or the browser's languages. Strings live in `app/[lang]/dictionaries/*.json` and are read on the server via `next/root-params`, so translations never reach the client bundle.
+- **i18n without a library.** Every route lives under `app/[lang]`. Static hosting has no server, so `public/index.html` redirects `/` to `en/`, or to `fa/` when the visitor picked Persian before (saved `lang` cookie). Strings live in `app/[lang]/dictionaries/*.json` and are read on the server via `next/root-params`, so translations never reach the client bundle.
 - **Fully static.** `output: "export"` writes plain HTML to `out/`; both locales are prerendered with `generateStaticParams`. `basePath` comes from `NEXT_PUBLIC_BASE_PATH` so the same code runs at `/` locally and at `/ati-site` on GitHub Pages.
 - **No theme flash.** An inline script in the root layout sets `data-theme` on `<html>` before first paint (saved cookie, else OS preference). The toggle just flips the attribute; icons switch with CSS, so there's no hydration mismatch.
 - **Design tokens.** Colours are CSS variables in `app/globals.css`, switched by `[data-theme="dark"]` and exposed to Tailwind via `@theme` (`bg-surface`, `text-sub`, `bg-coral-soft`…). A custom `dark:` variant follows `data-theme`.
