@@ -1,15 +1,26 @@
+<div align="center">
+
+<a href="https://atefeh-sa93.github.io/ati-site/"><img src="https://atefeh-sa93.github.io/ati-site/en/og.png" alt="Ati Atashi — Senior Front-End Engineer" width="760"></a>
+
 # Ati Atashi — personal site
 
+Bilingual (English / فارسی) portfolio · RTL-first · light & dark themes · static on GitHub Pages
+
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React 19](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Deploy](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml/badge.svg)](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml)
 
-### 🌐 [atefeh-sa93.github.io/ati-site](https://atefeh-sa93.github.io/ati-site/)
+### [🌐 Live site](https://atefeh-sa93.github.io/ati-site/)
 
 [English](https://atefeh-sa93.github.io/ati-site/en/) · [فارسی](https://atefeh-sa93.github.io/ati-site/fa/) · [CV (PDF)](https://atefeh-sa93.github.io/ati-site/cv.pdf) · [LinkedIn](https://www.linkedin.com/in/atefeh-atashi/)
 
-[![Ati Atashi — Senior Front-End Engineer](https://atefeh-sa93.github.io/ati-site/en/og.png)](https://atefeh-sa93.github.io/ati-site/)
+</div>
 
-Bilingual (Persian / English) portfolio built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**, exported as a static site to **GitHub Pages**.
-Light and dark themes, RTL-first layout, and motion that respects `prefers-reduced-motion`.
+<br>
+
+Built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**, exported as a static site to **GitHub Pages**. Motion respects `prefers-reduced-motion`.
 
 ## Getting started
 
