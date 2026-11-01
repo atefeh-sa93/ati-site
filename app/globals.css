@@ -165,6 +165,12 @@ body {
   animation: draw 1.2s 0.4s ease forwards;
 }
 
+/* Global 404 renders both languages; app/global-not-found.tsx sets <html lang> before paint. */
+html:not([lang="fa"]) [data-locale="fa"],
+html[lang="fa"] [data-locale="en"] {
+  display: none;
+}
+
 .lift { transition: transform 0.25s ease; }
 .lift:hover { transform: translateY(-6px) rotate(-1deg); }
 html[dir="rtl"] .lift:hover { transform: translateY(-6px) rotate(1deg); }

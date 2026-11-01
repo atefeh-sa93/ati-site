@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   // Used at build time by app/[lang]/og.png; bundling breaks it, so Node loads it directly.
   serverExternalPackages: ["fontkit"],
+  // app/global-not-found.tsx becomes out/404.html, the page GitHub Pages serves for unknown URLs.
+  experimental: { globalNotFound: true },
   turbopack: {
     rules: {
       "*.css": {
