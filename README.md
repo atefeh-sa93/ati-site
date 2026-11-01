@@ -1,6 +1,8 @@
 # Ati Atashi — personal site
 
-Bilingual (Persian / English) portfolio built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**.
+Bilingual (Persian / English) portfolio built with **Next.js 16**, **React 19**, **TypeScript** and **Tailwind CSS v4**, exported as a static site to **GitHub Pages**.
+
+**Live:** https://atefeh-sa93.github.io/ati-site/
 Light and dark themes, RTL-first layout, and motion that respects `prefers-reduced-motion`.
 
 ## Getting started
@@ -8,38 +10,36 @@ Light and dark themes, RTL-first layout, and motion that respects `prefers-reduc
 ```bash
 npm install
 cp .env.example .env.local   # optional
-npm run dev                  # http://localhost:3000 → redirects to /fa or /en
+npm run dev                  # http://localhost:3000/fa/ or /en/
 ```
 
 | Script | What it does |
 | --- | --- |
 | `npm run dev` | Dev server (Turbopack) |
-| `npm run build` | Production build |
+| `npm run build` | Static export to `out/` |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Generates route types, then `tsc --noEmit` |
 
 ## How it works
 
-- **i18n without a library.** Every route lives under `app/[lang]`. `proxy.ts` (Next 16's replacement for middleware) redirects `/` to `/fa` or `/en` from a saved `lang` cookie or the browser's `Accept-Language`. Strings live in `app/[lang]/dictionaries/*.json` and are read on the server via `next/root-params`, so translations never reach the client bundle.
-- **Static by default.** Cache Components is on; both locales are prerendered with `generateStaticParams`.
+- **i18n without a library.** Every route lives under `app/[lang]`. Static hosting has no server, so `public/index.html` redirects `/` to `fa/` or `en/` from a saved `lang` cookie or the browser's languages. Strings live in `app/[lang]/dictionaries/*.json` and are read on the server via `next/root-params`, so translations never reach the client bundle.
+- **Fully static.** `output: "export"` writes plain HTML to `out/`; both locales are prerendered with `generateStaticParams`. `basePath` comes from `NEXT_PUBLIC_BASE_PATH` so the same code runs at `/` locally and at `/ati-site` on GitHub Pages.
 - **No theme flash.** An inline script in the root layout sets `data-theme` on `<html>` before first paint (saved cookie, else OS preference). The toggle just flips the attribute; icons switch with CSS, so there's no hydration mismatch.
 - **Design tokens.** Colours are CSS variables in `app/globals.css`, switched by `[data-theme="dark"]` and exposed to Tailwind via `@theme` (`bg-surface`, `text-sub`, `bg-coral-soft`…). A custom `dark:` variant follows `data-theme`.
 - **RTL-first.** Logical utilities (`ps-*`, `inset-e-*`, `inset-s-*`) everywhere; arrows flip with `rtl:`; code and tags are forced `dir="ltr"`.
-- **GitHub card.** `lib/github.ts` fetches the last 28 days of contributions through the GraphQL API inside a `"use cache"` function (`cacheLife("hours")`). Without `GITHUB_TOKEN` it shows sample data.
+- **GitHub card.** `lib/github.ts` fetches the last 28 days of contributions through the GraphQL API at build time; the deploy workflow rebuilds daily to keep it fresh. Without `GITHUB_TOKEN` it shows sample data (and logs a warning in the build).
 - **Motion.** Entrance animations, a scroll-driven reveal (`animation-timeline: view()`, progressive enhancement), count-up stats (`components/count-up.tsx`) and hover details — all disabled under reduced motion.
-- **SEO.** Per-locale metadata with `hreflang` alternates, Open Graph, `sitemap.xml` and `robots.txt`.
+- **SEO.** Per-locale metadata with canonical URLs, `hreflang` alternates and Open Graph.
 - **Fonts** are self-hosted with `@fontsource-variable` (Vazirmatn, Nunito, Fredoka, Geist Mono).
 
 ### Modern platform features used
 
 **Next.js 16**
-- `proxy.ts` — the new name for middleware
-- Cache Components (`cacheComponents: true`) with Partial Prerendering
-- `"use cache"` + `cacheLife()` for the GitHub data
+- Static export (`output: "export"`) with `basePath` and `trailingSlash`
 - `next/root-params` to read the locale anywhere on the server without prop drilling
 - Typed route helpers (`LayoutProps<"/[lang]">`) and `next typegen`
 - Turbopack (default bundler for dev and build)
-- Metadata API with `hreflang` alternates, file-based `sitemap.ts`, `robots.ts`, `icon.svg`
+- Metadata API with `hreflang` alternates and a file-based `icon.svg`
 
 **Tailwind CSS v4**
 - CSS-first config: `@theme inline`, `@custom-variant`, `@utility` — no `tailwind.config.js`
@@ -61,17 +61,25 @@ app/
     dictionaries.ts   getLocale() / getDictionary()
     dictionaries/     fa.json, en.json
   globals.css         tokens, Tailwind theme, animations
-  sitemap.ts, robots.ts, icon.svg
+  icon.svg
 components/           header, hero, work, activity, writing, contact, client widgets
 lib/                  i18n config, site settings, GitHub data, cookie helper
-proxy.ts              locale redirect
+public/
+  index.html          locale redirect for /
+  cv.pdf
+.github/workflows/    ci.yml (checks), deploy.yml (GitHub Pages)
 ```
 
 ## Deploy
 
-Push to GitHub and import the repo in [Vercel](https://vercel.com/new). Optional environment variables (see `.env.example`):
+Every push to `main` (and a daily schedule) runs `.github/workflows/deploy.yml`, which builds the static export and publishes `out/` to GitHub Pages. One-time setup: **Settings → Pages → Source: GitHub Actions**.
+
+Build-time environment variables (see `.env.example`); the workflow sets the first two from the Pages config:
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Public URL used for canonical links, sitemap and Open Graph. Defaults to `https://ati-atashi.vercel.app`. |
-| `GITHUB_TOKEN` | A token with no scopes; shows the real contribution graph instead of sample data. |
+| `NEXT_PUBLIC_BASE_PATH` | Path prefix, e.g. `/ati-site`. Empty locally. |
+| `NEXT_PUBLIC_SITE_URL` | Public URL for canonical links and Open Graph. Defaults to `https://atefeh-sa93.github.io/ati-site`. |
+| `GITHUB_TOKEN` | Shows the real contribution graph. The workflow uses the `CONTRIBUTIONS_TOKEN` secret if set, else its own token. |
+
+To preview the production build locally, serve `out/` with any static server, e.g. `npx serve out`.
