@@ -15,6 +15,8 @@ export async function generateStaticParams() {
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const t = await getDictionary();
+  // Built by app/[lang]/og.png/route.tsx.
+  const image = { url: `/${locale}/og.png`, width: 1200, height: 630, alt: t.meta.title };
   return {
     metadataBase: new URL(site.url),
     title: t.meta.title,
@@ -30,8 +32,9 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t.meta.description,
       locale: locale === "fa" ? "fa_IR" : "en_US",
       siteName: t.person.name,
+      images: [image],
     },
-    twitter: { card: "summary_large_image", title: t.meta.title, description: t.meta.description },
+    twitter: { card: "summary_large_image", title: t.meta.title, description: t.meta.description, images: [image] },
   };
 }
 
