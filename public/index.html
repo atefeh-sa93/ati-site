@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ati Atashi</title>
+    <meta name="robots" content="noindex" />
+    <link rel="alternate" hreflang="fa" href="fa/" />
+    <link rel="alternate" hreflang="en" href="en/" />
+    <!--
+      Static hosting has no server-side proxy, so this page picks the language:
+      the visitor's saved choice (lang cookie, set by the language switch), else English.
+      Paths are relative so it works both locally (/) and on GitHub Pages (/ati-site/).
+    -->
+    <script>
+      (function () {
+        var saved = (document.cookie.match(/(?:^|; )lang=(fa|en)/) || [])[1];
+        location.replace((saved || "en") + "/" + location.hash);
+      })();
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=en/" /></noscript>
+  </head>
+  <body style="background: #fbf7ff">
+    <noscript><a href="en/">English</a> · <a href="fa/">فارسی</a></noscript>
+  </body>
+</html>

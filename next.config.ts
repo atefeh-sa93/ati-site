@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
+// GitHub Pages serves the site from /<repo>; set by the deploy workflow, empty locally.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Static HTML in out/, hosted on GitHub Pages.
+  output: "export",
+  basePath,
+  // Emit /fa/index.html instead of /fa.html so static hosts serve /fa/ directly.
+  trailingSlash: true,
   turbopack: {
     rules: {
       "*.css": {

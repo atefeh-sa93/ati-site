@@ -44,7 +44,7 @@ export function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
           <span dir="ltr" className="self-start font-mono text-[13px]">{t.impact.label}</span>
           <dl className="m-0 grid grid-cols-2 gap-x-3 gap-y-4">
             {t.impact.items.map((item) => (
-              <div key={item.label} className="flex flex-col-reverse">
+              <div key={item.label} className="flex flex-col-reverse justify-end">
                 <dt className="text-sm">{item.label}</dt>
                 <dd className="m-0 font-heading text-[28px] leading-tight font-extrabold">
                   <CountUp value={item.value} prefix={item.prefix} suffix={item.suffix} locale={locale} />
