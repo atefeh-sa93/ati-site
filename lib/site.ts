@@ -1,6 +1,6 @@
-/** Site-wide settings. Update the TODOs before launch. */
+/** Site-wide settings. */
 export const site = {
-  // TODO: replace with your real domain once it's connected (used for canonical URLs, sitemap and OG).
+  // Canonical URLs, sitemap and OG. Set NEXT_PUBLIC_SITE_URL when a custom domain is connected.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ati-atashi.vercel.app",
   email: "ati.atashi1993@gmail.com",
   github: { user: "atefeh-sa93", url: "https://github.com/atefeh-sa93" },

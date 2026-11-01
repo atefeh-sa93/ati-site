@@ -67,13 +67,11 @@ lib/                  i18n config, site settings, GitHub data, cookie helper
 proxy.ts              locale redirect
 ```
 
-## Before launch
-
-- [ ] Set `NEXT_PUBLIC_SITE_URL` (and `GITHUB_TOKEN`) in Vercel
-- [x] Add your CV as `public/cv.pdf`
-- [x] Add your Medium URL in `lib/site.ts`
-- [ ] Replace the "soon" posts once the first article is written
-
 ## Deploy
 
-Push to GitHub and import the repo in [Vercel](https://vercel.com/new). No extra configuration needed.
+Push to GitHub and import the repo in [Vercel](https://vercel.com/new). Optional environment variables (see `.env.example`):
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Public URL used for canonical links, sitemap and Open Graph. Defaults to `https://ati-atashi.vercel.app`. |
+| `GITHUB_TOKEN` | A token with no scopes; shows the real contribution graph instead of sample data. |
