@@ -4,6 +4,7 @@ import * as fontkit from "fontkit";
 import type { Font } from "fontkit";
 import { ImageResponse } from "next/og";
 import { hasLocale, locales } from "@/lib/i18n";
+import { rtlRuns } from "@/lib/rtl-runs";
 import { site } from "@/lib/site";
 import en from "../dictionaries/en.json";
 import fa from "../dictionaries/fa.json";
@@ -25,14 +26,9 @@ const COLORS = { primary: "#6c4df5", plum: "#2a1b3d", sun: "#ffc93c", teal: "#3d
 // ImageResponse needs static ttf/otf/woff files, so these come from the non-variable @fontsource packages.
 const font = (pkg: string, file: string) => readFile(join(process.cwd(), "node_modules/@fontsource", pkg, "files", file));
 
-const LATIN = /^[\x00-\x7F]+$/;
-const ZWNJ = "‌";
-
 /**
- * Satori lays text out left-to-right only, so Persian is placed word by word in a
- * row-reverse flex row. Latin runs ("Core Web Vitals") stay in reading order, and words
- * joined by a ZWNJ (نیم‌فاصله) are kept together, their pieces reversed the same way.
- * A leading "+" (as in "+۷") is split off so it lands right of the number, as in the browser.
+ * Satori lays text out left-to-right only, so Persian is placed run by run (see rtlRuns)
+ * in a row-reverse flex row, and each run's pieces are reversed the same way.
  *
  * Satori also sizes Persian words by their unjoined letter forms, leaving a gap after each
  * one, so every piece gets its real shaped width from fontkit.
@@ -45,19 +41,13 @@ function Rtl({ text, size, font, wrap = true }: { text: string; size: number; fo
       ? { width: (font.layout(part).advanceWidth / font.unitsPerEm) * size }
       : {};
 
-  const runs: string[] = [];
-  for (const word of text.split(" ")) {
-    const last = runs.length - 1;
-    if (LATIN.test(word) && last >= 0 && LATIN.test(runs[last])) runs[last] += ` ${word}`;
-    else runs.push(word);
-  }
   return (
     <div style={{ display: "flex", flexDirection: "row-reverse", flexWrap: wrap ? "wrap" : "nowrap", columnGap: size * 0.28 }}>
-      {runs.map((run, i) => (
+      {rtlRuns(text).map((run, i) => (
         <div key={i} style={{ display: "flex", flexDirection: "row-reverse" }}>
-          {LATIN.test(run)
-            ? run
-            : (run.startsWith("+") ? ["+", run.slice(1)] : run.split(ZWNJ)).map((part, j) => (
+          {run.latin
+            ? run.pieces[0]
+            : run.pieces.map((part, j) => (
                 <span key={j} style={style(part)}>
                   {part}
                 </span>
