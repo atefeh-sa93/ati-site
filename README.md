@@ -43,18 +43,41 @@ npm run dev                  # http://localhost:3000/en/ or /fa/
 
 ## Testing
 
-Unit and component tests use **Vitest** and **React Testing Library**. They live next to the code they cover (`lib/i18n.ts` → `lib/i18n.test.ts`) and run on every push and pull request in CI; the deploy workflow won't publish if they fail.
+**39 unit and component tests** in 6 files, running in about a second. They live next to the code they cover (`lib/i18n.ts` → `lib/i18n.test.ts`), run on every push and pull request in CI, and the deploy workflow won't publish if any fail.
 
-| File | What it covers | Technique |
-| --- | --- | --- |
-| `lib/i18n.test.ts` | Supported locales, English default, text direction | Plain assertions |
-| `lib/rtl-runs.test.ts` | Persian word splitting for the preview image: ZWNJ words, Latin phrases, leading `+`, extra spaces | Edge cases |
-| `lib/github.test.ts` | GitHub contributions: no token, request shape, level mapping, 28-day window, HTTP/network errors | `fetch` and env mocked |
-| `components/theme-toggle.test.tsx` | Real `<button>`, labels, light/dark toggle, saved cookie | Queries by role, `user-event` |
-| `components/lang-switch.test.tsx` | Labelled nav, `aria-current`, other-language link, saved cookie | `next/navigation` and `next/link` mocked |
-| `components/count-up.test.tsx` | Final value without JS, Persian digits, count-up on scroll, reduced motion, cleanup | Fake `matchMedia` / `IntersectionObserver`, fake timers |
+```bash
+npm test             # run once
+npm run test:watch   # re-run on every save
+```
 
-Components are found the way a screen reader finds them (`getByRole`), so a control that isn't accessible fails its tests. Async Server Components (the page itself, the GitHub card) aren't supported by Vitest and are left for end-to-end tests.
+### Tools
+
+| Tool | Role |
+| --- | --- |
+| [Vitest](https://vitest.dev) | Test runner and assertions (`describe` / `it` / `expect`), mocks (`vi.fn`, `vi.mock`, `vi.stubGlobal`, `vi.stubEnv`) and fake timers |
+| [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) | Renders components and finds elements the way users do (`getByRole`, `getByText`) |
+| [user-event](https://testing-library.com/docs/user-event/intro) | Realistic clicks and typing |
+| [jest-dom](https://github.com/testing-library/jest-dom) | Readable DOM checks: `toBeInTheDocument()`, `toHaveAttribute()` |
+| [jsdom](https://github.com/jsdom/jsdom) | A browser DOM inside Node, enabled per file with `// @vitest-environment jsdom` |
+
+Setup: `vitest.config.mts` (React plugin, `@/` paths from `tsconfig.json`) and `vitest.setup.ts` (jest-dom matchers, cleanup after each test).
+
+### What's covered
+
+| File | Tests | What it covers | Technique |
+| --- | --- | --- | --- |
+| `lib/i18n.test.ts` | 7 | Supported locales, English default, text direction | Plain assertions |
+| `lib/rtl-runs.test.ts` | 7 | Persian word splitting for the preview image: ZWNJ words, Latin phrases, leading `+`, extra spaces | Edge cases |
+| `lib/github.test.ts` | 7 | GitHub contributions: no token, request shape, level mapping, 28-day window, HTTP/network errors | `fetch` and env mocked |
+| `components/theme-toggle.test.tsx` | 5 | Real `<button>`, labels, light/dark toggle, saved cookie | Queries by role, `user-event` |
+| `components/lang-switch.test.tsx` | 5 | Labelled nav, `aria-current`, other-language link, saved cookie | `next/navigation` and `next/link` mocked |
+| `components/count-up.test.tsx` | 8 | Final value without JS, Persian digits, count-up on scroll, reduced motion, cleanup | Fake `matchMedia` / `IntersectionObserver`, fake timers |
+
+Components are found the way a screen reader finds them (`getByRole`), so a control that isn't accessible fails its tests. Writing them also caught a real bug: double or trailing spaces in Persian text produced empty words (extra gaps) in the preview image.
+
+### Not covered yet
+
+Async Server Components (the page itself, the GitHub card), the language redirect in `public/index.html`, the 404 page and the generated preview images need a real browser. They're planned as end-to-end tests with Playwright, along with accessibility checks (axe, WCAG 2.1 AA) for both languages and themes.
 
 ## How it works
 
