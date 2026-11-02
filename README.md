@@ -11,6 +11,7 @@ Bilingual (English / فارسی) portfolio · RTL-first · light & dark themes �
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Vitest](https://img.shields.io/badge/tested_with-Vitest-6E9F18?logo=vitest&logoColor=white)](#testing)
+[![WCAG 2.1 AA](https://img.shields.io/badge/a11y-WCAG_2.1_AA_(axe)-6c4df5)](#accessibility-axe--playwright)
 [![CI](https://github.com/atefeh-sa93/ati-site/actions/workflows/ci.yml/badge.svg)](https://github.com/atefeh-sa93/ati-site/actions/workflows/ci.yml)
 [![Deploy](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml/badge.svg)](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml)
 
@@ -40,17 +41,24 @@ npm run dev                  # http://localhost:3000/en/ or /fa/
 | `npm run typecheck` | Generates route types, then `tsc --noEmit` |
 | `npm test` | Unit and component tests (Vitest), once |
 | `npm run test:watch` | Same, re-running on every save |
+| `npm run test:e2e` | Accessibility checks (axe + Playwright) on the production build |
 
 ## Testing
 
-**39 unit and component tests** in 6 files, running in about a second. They live next to the code they cover (`lib/i18n.ts` → `lib/i18n.test.ts`), run on every push and pull request in CI, and the deploy workflow won't publish if any fail.
+Two layers, both run in CI on every push and pull request:
+
+- **39 unit and component tests** (Vitest) in 6 files, running in about a second. The deploy workflow won't publish if any fail.
+- **6 accessibility tests** (axe in Playwright) on the production build, in a real browser.
 
 ```bash
-npm test             # run once
+npm test             # unit and component tests, once
 npm run test:watch   # re-run on every save
+npm run test:e2e     # build, serve like GitHub Pages, then run axe in Chromium
 ```
 
-### Tools
+### Unit and component tests
+
+Tests live next to the code they cover (`lib/i18n.ts` → `lib/i18n.test.ts`).
 
 | Tool | Role |
 | --- | --- |
@@ -75,9 +83,29 @@ Setup: `vitest.config.mts` (React plugin, `@/` paths from `tsconfig.json`) and `
 
 Components are found the way a screen reader finds them (`getByRole`), so a control that isn't accessible fails its tests. Writing them also caught a real bug: double or trailing spaces in Persian text produced empty words (extra gaps) in the preview image.
 
+### Accessibility (axe + Playwright)
+
+`e2e/a11y.spec.ts` runs [axe-core](https://github.com/dequelabs/axe-core) with the **WCAG 2.1 A and AA** rules — colour contrast, labels, landmarks, headings, ARIA — in Chromium, on every page a visitor can see:
+
+| Page | Light | Dark |
+| --- | --- | --- |
+| Home, English | ✓ | ✓ |
+| Home, Persian (RTL) | ✓ | ✓ |
+| 404, English / Persian | ✓ (follows the saved theme) | |
+
+| Tool | Role |
+| --- | --- |
+| [Playwright](https://playwright.dev) | Drives a real Chromium; builds the site first and starts the server (`playwright.config.ts`) |
+| [@axe-core/playwright](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/playwright) | Runs axe inside the page and returns the violations |
+| `scripts/serve-pages.mjs` | Serves `out/` like GitHub Pages: under `/ati-site/`, with `404.html` and a 404 status for unknown URLs |
+
+Animations are turned off for the checks (`reducedMotion: "reduce"`), so contrast is measured on final colours, not half-faded frames. A failure prints each rule with the elements it hit, and CI keeps the Playwright report for 7 days.
+
+The first run found two contrast failures in the hero card — the badge (3.98:1) and the intro text (4.34:1), both under the 4.5:1 minimum — now fixed at 6.56:1 and 4.63:1.
+
 ### Not covered yet
 
-Async Server Components (the page itself, the GitHub card), the language redirect in `public/index.html`, the 404 page and the generated preview images need a real browser. They're planned as end-to-end tests with Playwright, along with accessibility checks (axe, WCAG 2.1 AA) for both languages and themes.
+Behaviour in a real browser — the language redirect in `public/index.html`, switching language and theme across reloads, the GitHub card's 28 cells, the generated preview images — is the next set of Playwright tests. axe also can't judge everything: keyboard flow and screen-reader wording still need a manual pass.
 
 ## How it works
 
@@ -130,8 +158,10 @@ lib/                  i18n config, site settings, GitHub data, cookie helper
 public/
   index.html          locale redirect for /
   cv.pdf
-.github/workflows/    ci.yml (lint, types, tests, build), deploy.yml (tests, then GitHub Pages)
+.github/workflows/    ci.yml (lint, types, tests, build; axe), deploy.yml (tests, then GitHub Pages)
 vitest.config.mts     test runner config (+ vitest.setup.ts)
+e2e/                  accessibility tests (Playwright + axe), playwright.config.ts
+scripts/serve-pages.mjs  serves out/ like GitHub Pages for e2e tests
 ```
 
 ## Deploy
