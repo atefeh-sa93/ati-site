@@ -12,7 +12,7 @@ export function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
         <DashedRings className="anim-spin absolute -inset-e-10 -bottom-12 opacity-25" />
         <Star className="anim-bob absolute inset-e-9 top-8 max-sm:hidden" />
 
-        <span className="inline-flex items-center gap-2 self-start rounded-full bg-white/15 px-4 py-1.5 text-sm font-bold">
+        <span className="inline-flex items-center gap-2 self-start rounded-full bg-plum/20 px-4 py-1.5 text-sm font-bold">
           <span aria-hidden="true" className="size-2 rounded-full bg-teal" />
           {t.hero.badge}
         </span>
