@@ -10,6 +10,8 @@ Bilingual (English / فارسی) portfolio · RTL-first · light & dark themes �
 [![React 19](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Vitest](https://img.shields.io/badge/tested_with-Vitest-6E9F18?logo=vitest&logoColor=white)](#testing)
+[![CI](https://github.com/atefeh-sa93/ati-site/actions/workflows/ci.yml/badge.svg)](https://github.com/atefeh-sa93/ati-site/actions/workflows/ci.yml)
 [![Deploy](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml/badge.svg)](https://github.com/atefeh-sa93/ati-site/actions/workflows/deploy.yml)
 
 ### [🌐 Live site](https://atefeh-sa93.github.io/ati-site/)
@@ -36,6 +38,23 @@ npm run dev                  # http://localhost:3000/en/ or /fa/
 | `npm run build` | Static export to `out/` |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Generates route types, then `tsc --noEmit` |
+| `npm test` | Unit and component tests (Vitest), once |
+| `npm run test:watch` | Same, re-running on every save |
+
+## Testing
+
+Unit and component tests use **Vitest** and **React Testing Library**. They live next to the code they cover (`lib/i18n.ts` → `lib/i18n.test.ts`) and run on every push and pull request in CI; the deploy workflow won't publish if they fail.
+
+| File | What it covers | Technique |
+| --- | --- | --- |
+| `lib/i18n.test.ts` | Supported locales, English default, text direction | Plain assertions |
+| `lib/rtl-runs.test.ts` | Persian word splitting for the preview image: ZWNJ words, Latin phrases, leading `+`, extra spaces | Edge cases |
+| `lib/github.test.ts` | GitHub contributions: no token, request shape, level mapping, 28-day window, HTTP/network errors | `fetch` and env mocked |
+| `components/theme-toggle.test.tsx` | Real `<button>`, labels, light/dark toggle, saved cookie | Queries by role, `user-event` |
+| `components/lang-switch.test.tsx` | Labelled nav, `aria-current`, other-language link, saved cookie | `next/navigation` and `next/link` mocked |
+| `components/count-up.test.tsx` | Final value without JS, Persian digits, count-up on scroll, reduced motion, cleanup | Fake `matchMedia` / `IntersectionObserver`, fake timers |
+
+Components are found the way a screen reader finds them (`getByRole`), so a control that isn't accessible fails its tests. Async Server Components (the page itself, the GitHub card) aren't supported by Vitest and are left for end-to-end tests.
 
 ## How it works
 
@@ -88,12 +107,13 @@ lib/                  i18n config, site settings, GitHub data, cookie helper
 public/
   index.html          locale redirect for /
   cv.pdf
-.github/workflows/    ci.yml (checks), deploy.yml (GitHub Pages)
+.github/workflows/    ci.yml (lint, types, tests, build), deploy.yml (tests, then GitHub Pages)
+vitest.config.mts     test runner config (+ vitest.setup.ts)
 ```
 
 ## Deploy
 
-Every push to `main` (and a daily schedule) runs `.github/workflows/deploy.yml`, which builds the static export and publishes `out/` to GitHub Pages. One-time setup: **Settings → Pages → Source: GitHub Actions**.
+Every push to `main` (and a daily schedule) runs `.github/workflows/deploy.yml`, which runs the tests, builds the static export and publishes `out/` to GitHub Pages. One-time setup: **Settings → Pages → Source: GitHub Actions**.
 
 Build-time environment variables (see `.env.example`); the workflow sets the first two from the Pages config:
 
