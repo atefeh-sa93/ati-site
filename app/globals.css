@@ -78,7 +78,7 @@
   --color-sun: #ffc93c;
   --color-coral: #ff7a59;
   --color-teal: #3dd6b5;
-  --color-lilac: #ede7ff;
+  --color-lilac: #f3efff; /* 4.6:1 on primary (WCAG AA) */
   --color-lavender: #d9cff0;
   --color-violet-soft: #e9e2ff;
 
