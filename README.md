@@ -164,6 +164,39 @@ e2e/                  accessibility tests (Playwright + axe), playwright.config.
 scripts/serve-pages.mjs  serves out/ like GitHub Pages for e2e tests
 ```
 
+## Decisions and trade-offs
+
+| Decision | Why | What it cost |
+| --- | --- | --- |
+| **Host on GitHub Pages** | I don't have a hosting plan yet; Pages is free and lives next to the code. | Static files only, so no server features — see the rows below. |
+| **Static export** (`output: "export"`) | It's what GitHub Pages can serve. | Next's proxy (middleware), the `sitemap`/`robots` routes and Cache Components don't work in export mode, so they were removed. The `/` → language redirect moved to a small script in `public/index.html`. |
+| **GitHub data fetched at build time** | The token stays in CI and never reaches the browser; the page stays fully static. | The contribution card can be up to a day old (the deploy rebuilds daily). |
+| **Social preview drawn with `next/og` (Satori)** | One card per language, generated from the same text as the page. | Satori has no right-to-left support, so Persian words are placed by hand (`lib/rtl-runs.ts`) with widths measured by `fontkit`. More code to own than a static image. |
+| **Preview served from an `og.png` route** | The built-in `opengraph-image` file came out without a `.png` extension in the static export. | A route handler instead of the file convention. |
+| **404 via `global-not-found`** | GitHub Pages serves one `404.html` for every unknown URL, in either language. | The API is still experimental. The page ships both languages and a script shows one. |
+| **Hero colours adjusted for contrast** | axe found the badge and intro text below WCAG AA (4.5:1). | The lilac and badge colours moved slightly from the original design. |
+
+## Known limitations
+
+- **The `/` redirect needs JavaScript.** Without it, a `<noscript>` refresh always goes to English, even if Persian was chosen before.
+- **No `sitemap.xml` or `robots.txt`** (see above); pages are still linked to each other with `hreflang`.
+- **The GitHub card can be up to 24 hours old**, and shows sample data if the build has no token.
+- **Project cards don't link anywhere yet**, and the writing section lists posts marked "Soon".
+- **Accessibility is checked automatically, not by hand.** axe passes in both languages and themes, but there's been no full keyboard or screen-reader pass.
+- **Browser behaviour isn't tested yet** — see [Not covered yet](#not-covered-yet).
+
+## How this was built
+
+I built this site with an AI coding assistant (Claude Code) writing most of the code, and I want to be clear about that.
+
+My part was deciding and checking:
+
+- **Decisions:** hosting on GitHub Pages, English as the default language, keeping my phone number out of the site and CV, a custom-designed 404 page, and which contrast fix to use.
+- **Catching problems in the output:** Tailwind class warnings across the codebase, misaligned stats in the hero card.
+- **Verification:** nothing was merged without lint, type checks, 39 unit tests and the axe checks passing in CI. When tests were added, each one was checked by breaking the code on purpose and watching it fail.
+
+What I'm doing next on my own: writing the browser tests listed under [Not covered yet](#not-covered-yet), without AI-written code.
+
 ## Deploy
 
 Every push to `main` (and a daily schedule) runs `.github/workflows/deploy.yml`, which runs the tests, builds the static export and publishes `out/` to GitHub Pages. One-time setup: **Settings → Pages → Source: GitHub Actions**.
